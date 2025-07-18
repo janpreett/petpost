@@ -90,7 +90,8 @@ def add_pet():
             filename = f"{uuid.uuid4()}{ext}"
             filepath = os.path.join(LOCAL_IMG_FOLDER, filename)
             photo.save(filepath)
-            photo_url = url_for('static', filename=f'img/{filename}')
+            # Save full URL to photo in JSON
+            photo_url = url_for('static', filename=f'img/{filename}', _external=True)
         else:
             photo_url = ""
 
@@ -98,7 +99,7 @@ def add_pet():
             'name': name,
             'age': age,
             'breed': breed,
-            'image_url': photo_url
+            'photo': photo_url
         }
 
         with open(DATA_FILE, 'r+') as f:
@@ -106,10 +107,12 @@ def add_pet():
             pets.append(new_pet)
             f.seek(0)
             json.dump(pets, f, indent=2)
+            f.truncate()
 
-        return redirect('/')
+        return redirect(url_for('index'))
 
     return render_template('add_pet.html')
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
+

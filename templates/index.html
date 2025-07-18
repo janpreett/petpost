@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PetPost - Adoptable Pets</title>
+  <meta name="description" content="Find adoptable pets from our small animal rescue group. Browse available pets and help them find a home." />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-left">
+      <a href="{{ url_for('index') }}" class="nav-brand">PetPost</a>
+    </div>
+    <div class="nav-right">
+      <a href="{{ url_for('add_pet') }}" class="nav-link">Add Pet</a>
+    </div>
+  </nav>
+
+  <main>
+    <h1 class="page-title">Available Pets for Adoption</h1>
+
+    <section class="pet-list" aria-live="polite" aria-label="List of adoptable pets">
+      {% if pets %}
+        {% for pet in pets %}
+          <article class="pet-card" tabindex="0">
+            <img src="{{ pet.photo }}" alt="Photo of {{ pet.name }}, a {{ pet.breed }}" class="pet-photo" />
+            <div class="pet-info-container">
+              <div class="pet-info"><strong>Name:</strong> {{ pet.name }}</div>
+              <div class="pet-info"><strong>Breed:</strong> {{ pet.breed }}</div>
+              <div class="pet-info"><strong>Age:</strong> {{ pet.age }} years</div>
+            </div>
+          </article>
+        {% endfor %}
+      {% else %}
+        <p class="no-pets-message">No pets available currently. Check back soon!</p>
+      {% endif %}
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <p>© {{ current_year }} PetPost. Helping furry friends find loving homes. Adopt, love, and cherish your new companion.</p>
+  </footer>
+</body>
+</html>
