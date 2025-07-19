@@ -33,7 +33,7 @@ def add_pet():
             photo_filename = f"{uuid.uuid4()}{ext}"
 
             # Upload photo to S3 bucket
-            s3.upload_fileobj(photo, S3_BUCKET, photo_filename, ExtraArgs={'ACL': 'public-read'})
+            s3.upload_fileobj(photo, S3_BUCKET, photo_filename)
 
             # Construct public URL to photo
             photo_url = f"https://{S3_BUCKET}.s3.amazonaws.com/{photo_filename}"
